@@ -8,6 +8,8 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { StudentComponent } from './student/student.component';
 import { TeacherComponent } from './teacher/teacher.component';
+import { ClientComponent } from './client/client.component';
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { TeacherComponent } from './teacher/teacher.component';
     ProductComponent,
     PagesComponent,
     StudentComponent,
-    TeacherComponent
+    TeacherComponent,
+    ClientComponent,
+    OrdersComponent
   ],
   imports: [
     CommonModule,
