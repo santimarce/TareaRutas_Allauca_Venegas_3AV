@@ -1,8 +1,10 @@
-interface ProductModel{
+import { CategoryModel } from "./categorymodel";
+
+export interface ProductModel{
     id:number;
     tittle:string;
     description:string;
     price:number;
-    category:string;
+    category:CategoryModel;
     images:string[];
 }

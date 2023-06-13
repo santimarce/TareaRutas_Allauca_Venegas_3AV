@@ -50,7 +50,7 @@ createProduct(){
     images: ["https://picsum.photos/536/354","https://picsum.photos/id/237/536/354","https://picsum.photos/seed/picsum/536/354"]
   };
   const url ="https://api.escuelajs.co/api/v1/products";
-  this.httpClient.post(url, data).subscribe(
+  this.productService.createProduct(url, data).subscribe(
   response =>{
     console.log(response);
   }
@@ -64,7 +64,7 @@ updateProduct(){
     description: "Zapatos mocacine / Santiago Venegas",
   };
   const url ="https://api.escuelajs.co/api/v1/products/218";
-  this.httpClient.put(url, data).subscribe(
+  this.productService.put(url, data).subscribe(
   response =>{
     console.log(response);
   }
