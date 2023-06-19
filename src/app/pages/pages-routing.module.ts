@@ -6,6 +6,8 @@ import { CategoryComponent } from './category/category.component';
 import { PagesComponent } from './pages.component';
 import { StudentComponent } from './student/student.component';
 import { TeacherComponent } from './teacher/teacher.component';
+import { ClientComponent } from './client/client.component';
+import { OrdersComponent } from './orders/orders.component';
 
 
 const routes:Routes = [
@@ -17,10 +19,9 @@ const routes:Routes = [
    {path:'product', component:ProductComponent},  
    {path:'category', component:CategoryComponent},
    {path: 'student', component:StudentComponent},
-   {path: 'teacher', component:TeacherComponent},
-
-
-
+     { path: 'teacher', component: TeacherComponent },
+     { path: 'client', component: ClientComponent },
+         {path: 'order', component:OrdersComponent},
    {path:'', redirectTo:'/dashboard', pathMatch:'full'},  
    //{path:'**', component:NoPagesFoundComponent},  
   ]},
