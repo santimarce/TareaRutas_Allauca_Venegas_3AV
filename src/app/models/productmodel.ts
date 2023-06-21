@@ -2,9 +2,16 @@ import { CategoryModel } from "./categorymodel";
 
 export interface ProductModel{
     id:number;
-    tittle:string;
-    description:string;
+    title:string;
     price:number;
+    description:string;
+    images:string;
     category:CategoryModel;
-    images:string[];
+}
+
+export interface CreateProductDto extends Omit<ProductModel, 'id' | 'category'>{
+    categoryId:number;
+}
+export interface UpdateProductDto extends Partial<ProductModel>{
+    categoryId?:number;
 }

@@ -1,8 +1,8 @@
 // inyeccion de dependencias
 
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ProductService } from './product.service';
+import { ProductserviceService } from 'src/app/services/productservice.service';
+import { CreateProductDto, ProductModel, UpdateProductDto } from 'src/app/models/productmodel';
 
 @Component({
   selector: 'app-product',
@@ -10,66 +10,64 @@ import { ProductService } from './product.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent {
+  products: ProductModel[] = [];
+  
+  selectedProduct: UpdateProductDto = { title: '', price: 0, description: '' };
+  createProductxd: CreateProductDto = { title: '', price: 0, description: '', images: 'https://picsum.photos/200/300' ,categoryId: 1};
 
-constructor (private productService:ProductService, private httpClient: HttpClient){
-}
+  constructor(private productService:ProductserviceService) {
+   this.editProduct();
+  }
+  
+  ngOnInit(): void {
+    this.getProducts();
+    //this.getProduct(15);
+    //this.createProduct(this.createProductxd);
+    //this.updateProduct(18, this.selectedProduct);
+    //this.deleteProduct(11);
+  }
 
-ngOnInit(): void{
-  //this.getProducts();
-  //this.getProduct();
-  //this.createProduct();
-  //this.updateProduct();
-  this.getProducts();
-}
-//Para todos los prods
-getProducts(){
-  //const url = 'https://api.escuelajs.co/api/v1/products';
-  const response = this.productService.getProducts();
-    console.log(response);
-}
-//Para un solo prod igualmente verificar para el taller
-getProduct(){
-  const response = this.productService.getProduct(2);
-  console.log(response);
-}
-//PAra crear // capturar el fetch. el back e iluminar el registro
-createProduct(){
-  const data = {
-    title: "Zapatos",
-    price: 40,
-    description: "Zapatos deportivos / Santiago Venegas",
-    categoryId: 1,
-    images: ["https://picsum.photos/536/354","https://picsum.photos/id/237/536/354","https://picsum.photos/seed/picsum/536/354"]
-  };
-  const url ="https://api.escuelajs.co/api/v1/products";
-  const response = this.httpClient.post(url, data).subscribe(
-  response =>{
-    console.log(response);
+  getProducts(){
+    const url = "https://api.escuelajs.co/api/v1/products";
+    this.productService.getAll().subscribe(
+      response =>{
+        this.products = response;
+        console.log(response);
+      }
+    )
   }
-  );//haciendo peticion al backend
-}
-// Para modificar igual tomar captura antes despues, back y todo 
-updateProduct(){
-  const data = {
-    title: "Zapatos de color",
-    price: 42,
-    description: "Zapatos mocacine / Santiago Venegas",
-  };
-  const url ="https://api.escuelajs.co/api/v1/products/218";
-  this.httpClient.put(url, data).subscribe(
-  response =>{
-    console.log(response);
+  getProduct(id: ProductModel['id'] ){
+    const url = "https://api.escuelajs.co/api/v1/products/id";
+    return this.productService.getOne(id).subscribe(
+      response =>{
+        console.log(response);
+      }
+    )
   }
-  );//haciendo peticion al backend
-}
-// PAra borrar un object
-deleteProduct(){
-  const url = "https://api.escuelajs.co/api/v1/products/3";
-  const response = this.httpClient.delete(url).subscribe(
-  response =>{
-    console.log(response);
+  createProduct(product: CreateProductDto){
+    this.productService.store(product).subscribe(
+      response =>{
+        console.log(response);
+      }
+    )
   }
-  );//haciendo peticion al backend
+  updateProduct(id: ProductModel['id'], product:UpdateProductDto){
+    this.productService.update(id, product).subscribe(
+      response =>{
+        console.log(response);
+      }
+    )
+  }
+  editProduct(){
+    this.selectedProduct = {title:'', price:0, description:''};
+  }
+  
+  deleteProduct(id: ProductModel['id']){
+    this.productService.destroy(id).subscribe(
+      response =>{
+        this.products = this.products.filter(product => product.id != id); 
+        console.log(response);
+      }
+    )
+  }
 }
-
-};
